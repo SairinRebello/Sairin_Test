@@ -5,6 +5,10 @@ public class HomeManager : MonoBehaviour
 {
     public void StartGame()
     {
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene("Game Scene");
+    }
+    public void QuitButton()
+    {
+        Application.Quit();
     }
 }
