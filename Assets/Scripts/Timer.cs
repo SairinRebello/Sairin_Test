@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -50,17 +49,8 @@ public class Timer : MonoBehaviour
 
     public void ResetTimerValue()
     {
-        if (!float.TryParse(inputField.text, out _))
-        {
-            Debug.Log("Input is not a number: " + inputField.text); 
-        }
-        else
-        {
-            float _time = float.Parse(inputField.text);
-            if (_time < 0) Debug.Log("Please enter positive numbers");
-            else if (_time < 5 && _time > 0) timeRemaining = _time;
-        }
-        
+        float _time = float.Parse(inputField.text);
+        timeRemaining = _time;
     }
 
     public void StartTimer()
