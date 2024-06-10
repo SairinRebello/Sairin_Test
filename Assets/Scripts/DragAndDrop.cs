@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class DragAndDrop : MonoBehaviour
@@ -44,56 +43,18 @@ public class DragAndDrop : MonoBehaviour
 
             gameObject.GetComponent<Collider2D>().enabled = false;
 
+            CheckBelowObjects();
 
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.zero);
-
-            if (hit.collider != null && hit.collider.gameObject.CompareTag("Grids"))
-            {
-                GameObject otherObject = hit.collider.gameObject;
-                Vector3 otherGridPosition = otherObject.transform.position;
-                GameObject otherParent = otherObject.transform.parent.gameObject;
-
-                if (Mathf.Abs(startPosition.x - otherGridPosition.x) + Mathf.Abs(startPosition.y - otherGridPosition.y) >= dragDistance)
-                {
-                    Debug.Log("move");
-                    otherObject.transform.SetParent(thisParent.transform);
-                    otherObject.transform.position = startPosition;
-                    transform.SetParent(otherParent.transform);
-                    transform.position = otherGridPosition;
-                    gameObject.GetComponent<SpriteRenderer>().sortingOrder = 2;
-                    if (gameObject.transform.childCount != 0)
-                    {
-                        gameObject.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sortingOrder = 3;
-                    }
-                }
-                else
-                {
-                    Debug.Log("do not move");
-                    transform.SetParent(thisParent.transform);
-                    gameObject.GetComponent<SpriteRenderer>().sortingOrder = 2;
-                    if (gameObject.transform.childCount != 0)
-                    {
-                        gameObject.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sortingOrder = 3;
-                    }
-                    transform.position = startPosition;
-                }
-            }
-            else
-            {
-                Debug.Log("did not hit");
-                transform.SetParent(thisParent.transform);
-                gameObject.GetComponent<SpriteRenderer>().sortingOrder = 2;
-                if (gameObject.transform.childCount != 0)
-                {
-                    gameObject.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sortingOrder = 3;
-                }
-            }
             gameObject.GetComponent<Collider2D>().enabled = true;
+
+            GameManager.Instance.RefreshGameWinValues();
+            GameManager.Instance.WinCheck();
 
         }
 
         if (isDragging)
         {
+
             Vector3 newPos = Camera.main.ScreenToWorldPoint(Input.mousePosition) + offset;
             newPos.z = 0;
 
@@ -110,8 +71,58 @@ public class DragAndDrop : MonoBehaviour
                 newPos.x = startPosition.x;
                 newPos.y = Mathf.Clamp(newPos.y, startPosition.y - dragDistance, startPosition.y + dragDistance);
             }
-
             transform.position = newPos;
+        }
+    }
+
+    private void CheckBelowObjects()
+    {
+
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.zero);
+
+        if (hit.collider != null && hit.collider.gameObject.CompareTag("Grids"))
+        {
+            GameObject otherObject = hit.collider.gameObject;
+            Vector3 otherGridPosition = otherObject.transform.position;
+            GameObject otherParent = otherObject.transform.parent.gameObject;
+
+            if (Mathf.Abs(startPosition.x - otherGridPosition.x) + Mathf.Abs(startPosition.y - otherGridPosition.y) >= dragDistance)
+            {
+                otherObject.transform.SetParent(thisParent.transform);
+                otherObject.transform.position = startPosition;
+                transform.SetParent(otherParent.transform);
+                transform.position = otherGridPosition;
+                SetSortingOrderBack();
+            }
+            else
+            {
+                transform.SetParent(thisParent.transform);
+                SetSortingOrderBack();
+            }
+        }
+        else
+        {
+            transform.position = startPosition;
+            transform.SetParent(thisParent.transform);
+            SetSortingOrderBack();
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        isDragging = false;
+        transform.position = startPosition;
+        transform.SetParent(thisParent.transform);
+        SetSortingOrderBack();
+        gameObject.GetComponent<Collider2D>().enabled = true;
+    }
+
+    private void SetSortingOrderBack()
+    {
+        gameObject.GetComponent<SpriteRenderer>().sortingOrder = 2;
+        if (gameObject.transform.childCount != 0)
+        {
+            gameObject.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sortingOrder = 3;
         }
     }
 

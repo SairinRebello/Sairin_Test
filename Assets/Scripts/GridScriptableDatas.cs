@@ -16,7 +16,7 @@ public class GridScriptableDatas : ScriptableObject
     [SerializeField] public GameObject startPipe;
     [SerializeField] public GameObject endItem;
 
-    [Header("All Pipes"), Space(1)]
+    [Header("All StartPipe"), Space(1)]
     [SerializeField] public GameObject rightUp;
     [SerializeField] public GameObject rightDown;
     [SerializeField] public GameObject leftUp;

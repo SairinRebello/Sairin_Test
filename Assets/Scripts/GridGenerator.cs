@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class GridGenerator : MonoBehaviour
@@ -30,6 +29,8 @@ public class GridGenerator : MonoBehaviour
         SetGridSize();
         GenerateGrid();
         GeneratePipes();
+        GameManager.gameStart = true;
+        Timer.Instance.StartTimer();
     }
 
     #region GENERATE GRIDS
@@ -196,7 +197,7 @@ public class GridGenerator : MonoBehaviour
     }
 
     /// <summary>
-    /// Create Pipes
+    /// Create StartPipe
     /// </summary>
     private void CreatePipe(bool lastPipe)
     {

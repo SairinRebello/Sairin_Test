@@ -10,7 +10,7 @@ public struct Coordinates
     }
 }
 
-public enum PipeShapes { Grass, LeftUp, LeftDown, RightUp, RightDown, Horizontal, Vertical }
+public enum PipeDirection { Left, Right, Up, Down }
 
 public enum WhereIsYTarget {  Up , Down , Streight}
 
