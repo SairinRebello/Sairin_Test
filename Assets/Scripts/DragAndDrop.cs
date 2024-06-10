@@ -19,6 +19,7 @@ public class DragAndDrop : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
+            if (GameManager.freeze) return;
             Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Collider2D hitCollider = Physics2D.OverlapPoint(mousePosition);
             if (hitCollider != null && hitCollider.gameObject == gameObject)
@@ -80,7 +81,7 @@ public class DragAndDrop : MonoBehaviour
 
         RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.zero);
 
-        if (hit.collider != null && hit.collider.gameObject.CompareTag("Grids"))
+        if (hit.collider != null && hit.collider.gameObject.CompareTag("Grids") && hit.collider.GetComponent<Rigidbody2D>() == null)
         {
             GameObject otherObject = hit.collider.gameObject;
             Vector3 otherGridPosition = otherObject.transform.position;

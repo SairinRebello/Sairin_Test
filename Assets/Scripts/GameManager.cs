@@ -11,8 +11,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject gameLosePanel;
 
     public static bool gameStart;
-    public static bool gameOver;
-    public static bool gameWin;
+
+    public static bool freeze;
   
     public static Coordinates startPipeCordinates;
     public static Coordinates endCordinates;
@@ -44,7 +44,6 @@ public class GameManager : MonoBehaviour
 
     public void GameFailed()
     {
-        gameOver = true;
         Time.timeScale = 0;
         gameLosePanel.SetActive(true);
     }

@@ -25,7 +25,7 @@ public class Pipes : MonoBehaviour
     {
         RaycastHit2D hits = Physics2D.Raycast(transform.position, direction, distance, pipeMask);
 
-        if(hits.collider != null && hits.collider.gameObject != gameObject)
+        if (hits.collider != null && hits.collider.gameObject != gameObject)
         {
             GameManager.Instance.gameWinPoint++;
         }

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GridGenerator : MonoBehaviour
@@ -267,7 +268,7 @@ public class GridGenerator : MonoBehaviour
         for (int i = 0; i < 25; i++)
         {
             Coordinates grassCoordinates = new Coordinates(GetRandomCoordinate(), GetRandomCoordinate());
-            Coordinates pipeCoordinates = new Coordinates(20,20); 
+            Coordinates pipeCoordinates = new Coordinates(20, 20);
             if (grassGrids.ContainsKey(grassCoordinates) && pipeGrids.Count > 0)
             {
                 int n = 0;
@@ -280,6 +281,7 @@ public class GridGenerator : MonoBehaviour
                         Vector3 temp = allGrids[pipeCoordinates].transform.position;
                         allGrids[pipeCoordinates].transform.position = allGrids[grassCoordinates].transform.position;
                         allGrids[grassCoordinates].transform.position = temp;
+
                     }
                 }
             }
