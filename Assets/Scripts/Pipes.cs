@@ -10,7 +10,6 @@ public class Pipes : MonoBehaviour
 
     private void Awake()
     {
-        parentName = transform.parent.name;
         SetDirection();
         GameManager.Instance.onGameWinCheck += OnWinCheck;
     }
@@ -38,6 +37,6 @@ public class Pipes : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Debug.DrawRay(transform.position, direction * distance, Color.red);
+
     }
 }
