@@ -61,8 +61,8 @@ public class GameManager : MonoBehaviour
 
     public void WinCheck()
     {
+        freeze = true;
         onGameWinCheck?.Invoke();
-        Debug.Log("Win " +gameWinPoint + "\n Lose " + gameLosePoint);
         if(gameWinPoint > 3 && gameLosePoint< 1)
         {
             GameWin();
@@ -71,6 +71,7 @@ public class GameManager : MonoBehaviour
         {
             StartCoroutine(CheckWinAgain(.1f));
         }
+        freeze = false;
     }
 
     public void RefreshGameWinValues()
